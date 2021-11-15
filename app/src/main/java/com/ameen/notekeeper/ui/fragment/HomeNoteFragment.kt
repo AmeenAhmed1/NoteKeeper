@@ -4,7 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -42,18 +42,18 @@ class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>() {
         val db: NoteDataBase = NoteDataBase.getNoteDataBaseInstance(requireContext())
         noteRepository = NoteRepository(db)
 
-        noteViewModel = NoteViewModel(noteRepository)
-        noteViewModel.notes.observe(this, Observer {
-            recyclerAdapter.diff.submitList(it)
-        })
+        val myViewModel: NoteViewModel = ViewModelProvider(this, NoteViewModel.factory(noteRepository))[NoteViewModel::class.java]
 
         recyclerAdapter = NoteAdapter()
         binding.notesRecyclerView.apply {
             adapter = recyclerAdapter
             layoutManager = GridLayoutManager(context, 2)
         }
-    }
 
+        noteViewModel = NoteViewModel(noteRepository)
+        noteViewModel.notes.observe(this) { recyclerAdapter.diff.submitList(it) }
+        myViewModel.getAllNotes()
+    }
 
     override fun onResume() {
         super.onResume()

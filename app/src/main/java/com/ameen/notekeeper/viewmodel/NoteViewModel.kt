@@ -2,6 +2,7 @@ package com.ameen.notekeeper.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.ameen.notekeeper.data.model.Note
 import com.ameen.notekeeper.repository.NoteRepository
@@ -15,11 +16,6 @@ import kotlinx.coroutines.launch
 class NoteViewModel(private val noteRepository: NoteRepository) : ViewModel() {
 
     var notes: MutableLiveData<List<Note>> = MutableLiveData()
-
-    init {
-        //getAllNotes()
-        //dummyData()
-    }
 
     fun getAllNotes() = viewModelScope.launch {
         val result = noteRepository.getAllNotes()
@@ -39,5 +35,15 @@ class NoteViewModel(private val noteRepository: NoteRepository) : ViewModel() {
                 Note(noteBody = "Body For Null Title.")
             )
         )
+    }
+
+    companion object {
+        fun factory(repository: NoteRepository): ViewModelProvider.Factory {
+            return object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return NoteViewModel(repository) as T
+                }
+            }
+        }
     }
 }
