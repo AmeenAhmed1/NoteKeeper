@@ -1,8 +1,6 @@
 package com.ameen.notekeeper.data.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.ameen.notekeeper.data.model.Note
 
 /**
@@ -14,9 +12,12 @@ import com.ameen.notekeeper.data.model.Note
 @Dao
 interface NoteDao {
 
-    @Insert
-    fun saveNote(note: Note?)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveNote(note: Note?)
 
     @Query("SELECT * FROM note_table")
-    fun getAllNotes(): List<Note>
+    suspend fun getAllNotes(): List<Note>
+
+    @Delete
+    suspend fun deleteNote(note: Note?)
 }

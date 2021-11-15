@@ -2,19 +2,24 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.ameen.notekeeper"
         minSdk 23
-        targetSdk 30
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
@@ -48,8 +53,9 @@ dependencies {
     kapt("androidx.lifecycle:lifecycle-compiler:2.4.0")
 
     //Room
+    implementation 'androidx.room:room-ktx:2.3.0'
     implementation("androidx.room:room-runtime:2.3.0")
-    annotationProcessor("androidx.room:room-compiler:2.3.0")
+    kapt "androidx.room:room-compiler:2.3.0"
 
     //Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")

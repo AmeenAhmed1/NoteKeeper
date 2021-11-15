@@ -3,4 +3,6 @@
     <string name="note_title">Note Title...</string>
     <string name="note_body">Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...Note Body...</string>
     <string name="addbutton">AddButton</string>
+    <string name="search_note">Search note</string>
+    <string name="note_goes_here">Note goes here</string>
 </resources>

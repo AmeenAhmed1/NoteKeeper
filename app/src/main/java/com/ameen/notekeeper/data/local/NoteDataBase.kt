@@ -1,6 +1,7 @@
 package com.ameen.notekeeper.data.local
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -23,11 +24,11 @@ abstract class NoteDataBase : RoomDatabase() {
         private var noteDataBaseInstance: NoteDataBase? = null
 
         @Synchronized
-        fun getNoteDataBaseInstance(context: Application): NoteDataBase {
+        fun getNoteDataBaseInstance(context: Context): NoteDataBase {
 
             if (noteDataBaseInstance == null) {
                 noteDataBaseInstance = Room.databaseBuilder(
-                    context.applicationContext,
+                    context,
                     NoteDataBase::class.java,
                     "NoteKeeper_DB.db"
                 ).build()
