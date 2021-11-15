@@ -1,5 +1,6 @@
 package com.ameen.notekeeper.ui.fragment
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,7 @@ import com.ameen.notekeeper.data.model.Note
 import com.ameen.notekeeper.databinding.FragmentHomeNoteBinding
 import com.ameen.notekeeper.repository.NoteRepository
 import com.ameen.notekeeper.ui.BaseFragment
-import com.ameen.notekeeper.ui.MainActivity
-import com.ameen.notekeeper.viewmodel.HomeNoteViewModel
+import com.ameen.notekeeper.viewmodel.NoteViewModel
 
 /**
  * Created by (Ameen Essa) on 11/15/2021
@@ -24,9 +24,11 @@ import com.ameen.notekeeper.viewmodel.HomeNoteViewModel
 
 class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>() {
 
+    private val TAG = "HomeNoteFragment"
+
     private lateinit var navController: NavController
     private lateinit var recyclerAdapter: NoteAdapter
-    private lateinit var homeNoteViewModel: HomeNoteViewModel
+    private lateinit var noteViewModel: NoteViewModel
     private lateinit var noteRepository: NoteRepository
 
     private lateinit var notes: List<Note>
@@ -40,8 +42,8 @@ class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>() {
         val db: NoteDataBase = NoteDataBase.getNoteDataBaseInstance(requireContext())
         noteRepository = NoteRepository(db)
 
-        homeNoteViewModel = HomeNoteViewModel(noteRepository)
-        homeNoteViewModel.notes.observe(this, Observer {
+        noteViewModel = NoteViewModel(noteRepository)
+        noteViewModel.notes.observe(this, Observer {
             recyclerAdapter.diff.submitList(it)
         })
 
@@ -52,4 +54,11 @@ class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>() {
         }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        Log.i(TAG, "onResume: Invoked!!")
+
+        noteViewModel.dummyData()
+    }
 }

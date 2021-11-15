@@ -12,21 +12,25 @@ import kotlinx.coroutines.launch
  * Copyright (c) 2021 . All rights reserved.
  * @Ameen.MobileDev@gmail.com
  */
-class HomeNoteViewModel(private val noteRepository: NoteRepository) : ViewModel() {
+class NoteViewModel(private val noteRepository: NoteRepository) : ViewModel() {
 
     var notes: MutableLiveData<List<Note>> = MutableLiveData()
 
     init {
         //getAllNotes()
-        dummyData()
+        //dummyData()
     }
 
-    private fun getAllNotes() = viewModelScope.launch {
+    fun getAllNotes() = viewModelScope.launch {
         val result = noteRepository.getAllNotes()
         notes.postValue(result!!)
     }
 
-    private fun dummyData() {
+    fun insertOrUpdateNote(note: Note?) = viewModelScope.launch {
+        noteRepository.insertOrUpdateNote(note)
+    }
+
+    fun dummyData() {
         notes.postValue(
             listOf(
                 Note(title = "Title 1", noteBody = "Body 1"),
