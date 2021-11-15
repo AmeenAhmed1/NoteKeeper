@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ameen.notekeeper.data.model.Note
 import com.ameen.notekeeper.databinding.ItemNoteBinding
 
-class NoteAdapter() :
+class NoteAdapter :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     private val TAG = "NoteAdapter"
@@ -41,10 +41,12 @@ class NoteAdapter() :
 
         val item = diff.currentList[position]
 
-        holder.itemView.setOnLongClickListener(View.OnLongClickListener {
-            Log.i(TAG, "onBindViewHolder: LongClick Pressed")
-            return@OnLongClickListener true
-        })
+        holder.itemView.setOnLongClickListener(
+            View.OnLongClickListener {
+                Log.i(TAG, "onBindViewHolder: LongClick Pressed")
+                return@OnLongClickListener true
+            }
+        )
 
         if (item.title != null) {
             holder.binding.titleTextView.visibility = View.VISIBLE

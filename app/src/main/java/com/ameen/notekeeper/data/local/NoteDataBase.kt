@@ -1,6 +1,5 @@
 package com.ameen.notekeeper.data.local
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -17,7 +16,6 @@ import com.ameen.notekeeper.data.model.Note
 abstract class NoteDataBase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao?
-
 
     companion object {
 
@@ -37,5 +35,4 @@ abstract class NoteDataBase : RoomDatabase() {
             return noteDataBaseInstance!!
         }
     }
-
 }

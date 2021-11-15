@@ -14,13 +14,12 @@ import androidx.viewbinding.ViewBinding
  */
 abstract class BaseFragment<T : ViewBinding> : Fragment() {
 
-    //Binding View
+    // Binding View
     private var _binding: ViewBinding? = null
     abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> T
 
     protected val binding: T
         get() = _binding as T
-
 
     override fun onCreateView(
         inflater: LayoutInflater,

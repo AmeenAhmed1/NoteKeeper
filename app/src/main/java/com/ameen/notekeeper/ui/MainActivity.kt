@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
 
     private lateinit var binding: ActivityMainBinding
-    private var isButtonAdd = true  // 0 -> Add  -- 1 -> Edit
+    private var isButtonAdd = true // 0 -> Add  -- 1 -> Edit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

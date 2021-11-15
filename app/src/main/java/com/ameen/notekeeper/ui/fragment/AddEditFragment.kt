@@ -23,6 +23,5 @@ class AddEditFragment : BaseFragment<FragmentAddEditNoteBinding>() {
     override fun setupOnViewCreated(view: View) {
 
         appDataBase = NoteDataBase.getNoteDataBaseInstance(requireContext())
-
     }
 }
