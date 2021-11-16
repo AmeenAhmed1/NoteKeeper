@@ -51,7 +51,7 @@ class NoteAdapter :
         if (item.title != null) {
             holder.binding.titleTextView.visibility = View.VISIBLE
             holder.binding.titleTextView.text = item.title
-        }
+        } else holder.binding.titleTextView.visibility = View.GONE
         holder.binding.bodyTextView.text = item.noteBody
     }
 

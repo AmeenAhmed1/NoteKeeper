@@ -26,17 +26,6 @@ class NoteViewModel(private val noteRepository: NoteRepository) : ViewModel() {
         noteRepository.insertOrUpdateNote(note)
     }
 
-    fun dummyData() {
-        notes.postValue(
-            listOf(
-                Note(title = "Title 1", noteBody = "Body 1"),
-                Note(title = "Title 2", noteBody = "Body 2"),
-                Note(title = "Title 3", noteBody = "Body 3"),
-                Note(noteBody = "Body For Null Title.")
-            )
-        )
-    }
-
     companion object {
         fun factory(repository: NoteRepository): ViewModelProvider.Factory {
             return object : ViewModelProvider.Factory {

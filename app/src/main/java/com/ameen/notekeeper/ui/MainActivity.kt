@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.ameen.notekeeper.R
 import com.ameen.notekeeper.databinding.ActivityMainBinding
+import com.ameen.notekeeper.ui.fragment.AddEditFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var isButtonAdd = true // 0 -> Add  -- 1 -> Edit
+    private val addEditFragment: AddEditFragment = AddEditFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,19 +26,19 @@ class MainActivity : AppCompatActivity() {
 
         val navController = navHostFragment.navController
 
-        binding.addNoteButton.setOnClickListener {
-            if (isButtonAdd) {
-                isButtonAdd = false
-                binding.addNoteButton.setImageResource(R.drawable.ic_done)
-                navController.navigate(R.id.action_home_note_fragment_to_add_edit_fragment)
-                Log.i(TAG, "onCreate: Add Pressed")
-                Log.i(TAG, "onCreate: ButtonValue -> $isButtonAdd")
-            } else {
-                isButtonAdd = true
-                binding.addNoteButton.setImageResource(R.drawable.ic_add)
-                navController.popBackStack()
-                Log.i(TAG, "onCreate: Complete Pressed")
-            }
-        }
+//        binding.addNoteButton.setOnClickListener {
+//            if (isButtonAdd) {
+//                isButtonAdd = false
+//                binding.addNoteButton.setImageResource(R.drawable.ic_done)
+//                navController.navigate(R.id.action_home_note_fragment_to_add_edit_fragment)
+//                Log.i(TAG, "onCreate: Add Pressed")
+//                Log.i(TAG, "onCreate: ButtonValue -> $isButtonAdd")
+//            } else {
+//                isButtonAdd = true
+//                binding.addNoteButton.setImageResource(R.drawable.ic_add)
+//                navController.popBackStack()
+//                Log.i(TAG, "onCreate: Complete Pressed")
+//            }
+//        }
     }
 }

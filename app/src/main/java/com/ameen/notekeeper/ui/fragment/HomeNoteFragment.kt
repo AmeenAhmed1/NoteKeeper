@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import com.ameen.notekeeper.R
 import com.ameen.notekeeper.adapter.NoteAdapter
 import com.ameen.notekeeper.data.local.NoteDataBase
-import com.ameen.notekeeper.data.model.Note
 import com.ameen.notekeeper.databinding.FragmentHomeNoteBinding
 import com.ameen.notekeeper.repository.NoteRepository
 import com.ameen.notekeeper.ui.BaseFragment
@@ -22,7 +22,7 @@ import com.ameen.notekeeper.viewmodel.NoteViewModel
  * @Ameen.MobileDev@gmail.com
  */
 
-class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>() {
+class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>(){
 
     private val TAG = "HomeNoteFragment"
 
@@ -30,8 +30,6 @@ class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>() {
     private lateinit var recyclerAdapter: NoteAdapter
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var noteRepository: NoteRepository
-
-    private lateinit var notes: List<Note>
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeNoteBinding
         get() = FragmentHomeNoteBinding::inflate
@@ -42,7 +40,11 @@ class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>() {
         val db: NoteDataBase = NoteDataBase.getNoteDataBaseInstance(requireContext())
         noteRepository = NoteRepository(db)
 
-        val myViewModel: NoteViewModel = ViewModelProvider(this, NoteViewModel.factory(noteRepository))[NoteViewModel::class.java]
+        noteViewModel =
+            ViewModelProvider(
+                this,
+                NoteViewModel.factory(noteRepository)
+            )[NoteViewModel::class.java]
 
         recyclerAdapter = NoteAdapter()
         binding.notesRecyclerView.apply {
@@ -50,15 +52,19 @@ class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>() {
             layoutManager = GridLayoutManager(context, 2)
         }
 
-        noteViewModel = NoteViewModel(noteRepository)
+        //noteViewModel = NoteViewModel(noteRepository)
         noteViewModel.notes.observe(this) { recyclerAdapter.diff.submitList(it) }
-        myViewModel.getAllNotes()
+
+        binding.addNoteButton.setOnClickListener {
+            navController.navigate(R.id.action_home_note_fragment_to_add_edit_fragment)
+        }
     }
 
     override fun onResume() {
         super.onResume()
         Log.i(TAG, "onResume: Invoked!!")
 
-        noteViewModel.dummyData()
+        noteViewModel.getAllNotes()
+        //noteViewModel.dummyData()
     }
 }
