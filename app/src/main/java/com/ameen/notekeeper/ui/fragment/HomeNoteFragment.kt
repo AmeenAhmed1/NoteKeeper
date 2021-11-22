@@ -1,5 +1,6 @@
 package com.ameen.notekeeper.ui.fragment
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.ameen.notekeeper.R
 import com.ameen.notekeeper.adapter.NoteAdapter
 import com.ameen.notekeeper.data.local.NoteDataBase
+import com.ameen.notekeeper.data.model.Note
 import com.ameen.notekeeper.databinding.FragmentHomeNoteBinding
 import com.ameen.notekeeper.repository.NoteRepository
 import com.ameen.notekeeper.ui.BaseFragment
@@ -22,7 +24,7 @@ import com.ameen.notekeeper.viewmodel.NoteViewModel
  * @Ameen.MobileDev@gmail.com
  */
 
-class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>(){
+class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>() {
 
     private val TAG = "HomeNoteFragment"
 
@@ -47,6 +49,11 @@ class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>(){
             )[NoteViewModel::class.java]
 
         recyclerAdapter = NoteAdapter()
+        recyclerAdapter.onItemClicked {
+            Log.i(TAG, "setupOnViewCreated: ClickListener --> $it")
+            onNoteItemSelected(it)
+        }
+
         binding.notesRecyclerView.apply {
             adapter = recyclerAdapter
             layoutManager = GridLayoutManager(context, 2)
@@ -56,7 +63,12 @@ class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>(){
         noteViewModel.notes.observe(this) { recyclerAdapter.diff.submitList(it) }
 
         binding.addNoteButton.setOnClickListener {
-            navController.navigate(R.id.action_home_note_fragment_to_add_edit_fragment)
+            val bundle = Bundle()
+            bundle.putBoolean("isAddNote", true)
+            navController.navigate(
+                R.id.action_home_note_fragment_to_add_edit_fragment,
+                bundle
+            )
         }
     }
 
@@ -66,5 +78,17 @@ class HomeNoteFragment : BaseFragment<FragmentHomeNoteBinding>(){
 
         noteViewModel.getAllNotes()
         //noteViewModel.dummyData()
+    }
+
+    private fun onNoteItemSelected(note: Note?) {
+
+        Log.i(TAG, "onNoteItemSelected: insideFunction --> $note")
+
+        val bundle = Bundle()
+        bundle.putSerializable("selectedNote", note)
+        navController.navigate(
+            R.id.action_home_note_fragment_to_add_edit_fragment,
+            bundle
+        )
     }
 }

@@ -62,6 +62,7 @@
         android:layout_marginEnd="@dimen/_16dp"
         android:contentDescription="@string/addbutton"
         android:src="@drawable/ic_delete"
+        android:visibility="gone"
         app:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/add_note_button"
         app:layout_constraintEnd_toStartOf="@+id/add_note_button"

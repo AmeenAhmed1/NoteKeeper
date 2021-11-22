@@ -2,6 +2,7 @@ package com.ameen.notekeeper.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 /**
  * Created by (Ameen Essa) on 11/13/2021
@@ -15,4 +16,4 @@ data class Note(
     val id: Int? = null,
     val title: String? = null,
     val noteBody: String? = null
-)
+) : Serializable

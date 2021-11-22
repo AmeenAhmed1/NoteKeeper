@@ -53,6 +53,8 @@ class NoteAdapter :
             holder.binding.titleTextView.text = item.title
         } else holder.binding.titleTextView.visibility = View.GONE
         holder.binding.bodyTextView.text = item.noteBody
+
+        holder.itemView.setOnClickListener { onItemClickListener?.let { it(item) } }
     }
 
     override fun getItemCount(): Int = diff.currentList.size
